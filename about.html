@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>FitFuel — Workout & Meal Tracker</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#263238">
+
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav class="teal darken-4">
+      <div class="nav-wrapper container">
+        <a href="index.html" class="brand-logo">FitFuel</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="workouts.html"><i class="material-icons left">fitness_center</i>Workouts</a></li>
+          <li><a href="meals.html"><i class="material-icons left">restaurant</i>Meals</a></li>
+          <li><a href="about.html"><i class="material-icons left">info</i>About</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="workouts.html"><i class="material-icons left">fitness_center</i>Workouts</a></li>
+    <li><a href="meals.html"><i class="material-icons left">restaurant</i>Meals</a></li>
+    <li><a href="about.html"><i class="material-icons left">info</i>About</a></li>
+  </ul>
+
+
+<main class="container section">
+  <h4><i class="material-icons left">info</i>About FitFuel</h4>
+  <p>FitFuel is a prototype Progressive Web App demonstrating installability, offline caching,
+  and responsive, mobile-first UI using Materialize CSS. Content is placeholder-only.</p>
+
+  <ul class="collection">
+    <li class="collection-item">Installable via browser menu (Add to Home screen)</li>
+    <li class="collection-item">Offline-ready with basic cache of key pages</li>
+    <li class="collection-item">Responsive layout & touch-friendly components</li>
+  </ul>
+</main>
+
+  <footer class="page-footer teal darken-4">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h6 class="white-text">FitFuel — Workout & Meal Tracker</h6>
+          <p class="grey-text text-lighten-4">Demo prototype. Installable & offline-ready.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">© 2025 FitFuel</div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

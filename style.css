@@ -1,0 +1,8 @@
+/* Basic theme tweaks */
+.hero {
+  background: linear-gradient(120deg, #263238, #37474f);
+  padding: 64px 0;
+}
+.hero .btn-large { margin-top: 12px; }
+.card .card-image img { object-fit: cover; height: 220px; }
+.page-footer { margin-top: 48px; }
