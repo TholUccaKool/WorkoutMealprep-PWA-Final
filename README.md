@@ -1,4 +1,4 @@
-# 🏋️‍♂️ FitFuel — Workout & Meal Tracker (Progressive Web App)
+# 🏋️‍♂️ FitFuel Workout & Meal Tracker (Progressive Web App)
 
 **FitFuel** is a fully functional Progressive Web App (PWA) built with **HTML**, **Materialize CSS**, and **JavaScript**.  
 It helps users log workouts, plan meals, and track progress, all while being **installable** and **available offline**.
