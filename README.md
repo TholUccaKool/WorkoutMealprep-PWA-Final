@@ -1,7 +1,7 @@
 # 🏋️‍♂️ FitFuel — Workout & Meal Tracker (Progressive Web App)
 
 **FitFuel** is a fully functional Progressive Web App (PWA) built with **HTML**, **Materialize CSS**, and **JavaScript**.  
-It helps users log workouts, plan meals, and track progress — all while being **installable** and **available offline**.
+It helps users log workouts, plan meals, and track progress, all while being **installable** and **available offline**.
 
 ---
 
@@ -10,7 +10,7 @@ It helps users log workouts, plan meals, and track progress — all while being 
 - **Offline Support:** Service Worker caches core pages and assets for offline use.  
 - **Installable App:** Includes a manifest and icons for installation on desktop and mobile.  
 - **Local Storage:** Saves workouts and meals so data stays even when offline.  
-- **Dashboard:** Shows 7-day summary of workouts, meals, and total calories.  
+- **Dashboard:** Shows 7 day summary of workouts, meals, and total calories.  
 - **Favorites:** Mark workouts and meals with ⭐ to view them easily later.  
 - **Charts:** Tracks calorie intake visually using Chart.js.  
 - **Notifications:** Simple workout reminders using the Notifications API.  
@@ -29,9 +29,9 @@ It helps users log workouts, plan meals, and track progress — all while being 
 ---
 
 ## 🧩 Caching Strategy
-- **HTML / Navigations:** Network-first with fallback to `offline.html`  
-- **CSS / JS:** Cache-first  
-- **Images:** Stale-while-revalidate  
+- **HTML / Navigations:** Network first with fallback to `offline.html`  
+- **CSS / JS:** Cache first  
+- **Images:** Stale while revalidate  
 - **Offline Fallback:** Custom offline page served when connection is lost  
 
 ---
