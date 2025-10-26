@@ -1,29 +1,46 @@
-# FitFuel — Workout & Meal Tracker (PWA Prototype)
+# 🏋️‍♂️ FitFuel — Workout & Meal Tracker (Progressive Web App)
 
-A responsive prototype built with **HTML** and **Materialize CSS** that demonstrates core PWA ideas:
-installability (manifest), offline support (service worker), and fast repeat visits (caching).
+**FitFuel** is a fully functional Progressive Web App (PWA) built with **HTML**, **Materialize CSS**, and **JavaScript**.  
+It helps users log workouts, plan meals, and track progress — all while being **installable** and **available offline**.
 
-## Features
-- Materialize UI with responsive layout (navbar, cards, collapsible lists)
-- Pages: Home, Workouts, Meals, About
-- Installable via `manifest.webmanifest`
-- Offline-ready: basic cache of key pages via `service-worker.js`
+---
 
-## Run Locally
-Just open `index.html` in a modern browser. For full service worker behavior,
-you'll need to serve files over HTTP(S). The simplest way is using Python:
+## 🚀 Features
+- **Responsive Design:** Built with Materialize CSS for a clean, modern fitness look.  
+- **Offline Support:** Service Worker caches core pages and assets for offline use.  
+- **Installable App:** Includes a manifest and icons for installation on desktop and mobile.  
+- **Local Storage:** Saves workouts and meals so data stays even when offline.  
+- **Dashboard:** Shows 7-day summary of workouts, meals, and total calories.  
+- **Favorites:** Mark workouts and meals with ⭐ to view them easily later.  
+- **Charts:** Tracks calorie intake visually using Chart.js.  
+- **Notifications:** Simple workout reminders using the Notifications API.  
+- **Custom Offline Page:** Displays a message when there’s no internet connection.
+
+---
+
+## 🧠 Technology Stack
+- **HTML5, CSS3, JavaScript (ES6)**  
+- **MaterializeCSS** for layout and styling  
+- **Chart.js** for calorie tracking visualization  
+- **Service Worker API** for offline caching  
+- **LocalStorage** for persistent data  
+- **GitHub Pages** for deployment
+
+---
+
+## 🧩 Caching Strategy
+- **HTML / Navigations:** Network-first with fallback to `offline.html`  
+- **CSS / JS:** Cache-first  
+- **Images:** Stale-while-revalidate  
+- **Offline Fallback:** Custom offline page served when connection is lost  
+
+---
+
+## 🧪 How to Test Locally
+Because service workers only run over HTTP(S), start a local server:
 
 ```bash
-# From project folder:
+# From the project folder
 python3 -m http.server 8080
-# then visit http://localhost:8080
-```
-
-## Deploy to GitHub Pages
-1. Push this folder to a public GitHub repo.
-2. In repo settings → Pages → set **Branch: main / root**.
-3. Access at: `https://<your-username>.github.io/<repo-name>/`
-
-## Notes
-- Content and images are placeholders for demo purposes.
-- This is a prototype—no real data storage or backend is included.
+# then open
+http://localhost:8080
