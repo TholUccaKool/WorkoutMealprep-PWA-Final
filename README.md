@@ -26,4 +26,4 @@ python3 -m http.server 8080
 
 ## Notes
 - Content and images are placeholders for demo purposes.
-- This is a prototype no real data storage or backend is included.
+- This is a prototype—no real data storage or backend is included.

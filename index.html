@@ -1,95 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-  <title>FitFuel — Workout & Meal Tracker</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css">
-  <meta name="theme-color" content="#263238">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <title>FitFuel — Workout & Meal Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="theme-color" content="#263238" />
 
-  <meta name="description" content="Track workouts and meals with an installable, offline-capable PWA prototype built with Materialize CSS.">
-</head>
-<body>
-  <div class="navbar-fixed">
-    <nav class="teal darken-4">
-      <div class="nav-wrapper container">
-        <a href="index.html" class="brand-logo">FitFuel</a>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="workouts.html"><i class="material-icons left">fitness_center</i>Workouts</a></li>
-          <li><a href="meals.html"><i class="material-icons left">restaurant</i>Meals</a></li>
-          <li><a href="about.html"><i class="material-icons left">info</i>About</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="workouts.html"><i class="material-icons left">fitness_center</i>Workouts</a></li>
-    <li><a href="meals.html"><i class="material-icons left">restaurant</i>Meals</a></li>
-    <li><a href="about.html"><i class="material-icons left">info</i>About</a></li>
-  </ul>
-
-
-  <header class="hero">
-    <div class="container">
-      <h3 class="white-text">Fuel your fitness, anywhere.</h3>
-      <p class="white-text flow-text">Log workouts, plan meals, and access your data even when offline. Install FitFuel to your home screen.</p>
-      <a href="workouts.html" class="btn-large waves-effect waves-light deep-orange">Start Logging</a>
-    </div>
-  </header>
-
-  <main class="container section">
-    <div class="row">
-      <div class="col s12 m6">
-        <div class="card hoverable">
-          <div class="card-image">
-            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop" alt="Workout">
-            <span class="card-title">Workouts</span>
-          </div>
-          <div class="card-content">
-            <p>Track sets, reps, and time. Works offline with cached pages so you can keep going without internet.</p>
-          </div>
-          <div class="card-action">
-            <a href="workouts.html" class="deep-orange-text">Open Workouts</a>
-          </div>
+    <meta
+      name="description"
+      content="Track workouts and meals with an installable, offline-capable PWA prototype built with Materialize CSS."
+    />
+  </head>
+  <body>
+    <div class="navbar-fixed">
+      <nav class="teal darken-4">
+        <div class="nav-wrapper container">
+          <a href="index.html" class="brand-logo">FitFuel</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+            ><i class="material-icons">menu</i></a
+          >
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <a href="workouts.html"
+                ><i class="material-icons left">fitness_center</i>Workouts</a
+              >
+            </li>
+            <li>
+              <a href="meals.html"
+                ><i class="material-icons left">restaurant</i>Meals</a
+              >
+            </li>
+            <li>
+              <a href="about.html"
+                ><i class="material-icons left">info</i>About</a
+              >
+            </li>
+          </ul>
         </div>
-      </div>
-      <div class="col s12 m6">
-        <div class="card hoverable">
-          <div class="card-image">
-            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop" alt="Meals">
-            <span class="card-title">Meals</span>
-          </div>
-          <div class="card-content">
-            <p>Plan meals with macros. Add to home screen for quick access and fast repeat visits.</p>
-          </div>
-          <div class="card-action">
-            <a href="meals.html" class="deep-orange-text">Open Meals</a>
-          </div>
-        </div>
-      </div>
+      </nav>
     </div>
-  </main>
+    <ul class="sidenav" id="mobile-demo">
+      <li>
+        <a href="workouts.html"
+          ><i class="material-icons left">fitness_center</i>Workouts</a
+        >
+      </li>
+      <li>
+        <a href="meals.html"
+          ><i class="material-icons left">restaurant</i>Meals</a
+        >
+      </li>
+      <li>
+        <a href="about.html"><i class="material-icons left">info</i>About</a>
+      </li>
+    </ul>
 
-  <footer class="page-footer teal darken-4">
-    <div class="container">
+    <header class="hero">
+      <div class="container">
+        <h3 class="white-text">Fuel your fitness, anywhere.</h3>
+        <p class="white-text flow-text">
+          Log workouts, plan meals, and access your data even when offline.
+          Install FitFuel to your home screen.
+        </p>
+        <a
+          href="workouts.html"
+          class="btn-large waves-effect waves-light deep-orange"
+          >Start Logging</a
+        >
+      </div>
+    </header>
+
+    <main class="container section">
       <div class="row">
-        <div class="col s12">
-          <h6 class="white-text">FitFuel — Workout & Meal Tracker</h6>
-          <p class="grey-text text-lighten-4">Demo prototype. Installable & offline-ready.</p>
+        <div class="col s12 m6">
+          <div class="card hoverable">
+            <div class="card-image">
+              <img
+                src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1200&auto=format&fit=crop"
+                alt="Workout"
+              />
+              <span class="card-title">Workouts</span>
+            </div>
+            <div class="card-content">
+              <p>
+                Track sets, reps, and time. Works offline with cached pages so
+                you can keep going without internet.
+              </p>
+            </div>
+            <div class="card-action">
+              <a href="workouts.html" class="deep-orange-text">Open Workouts</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card hoverable">
+            <div class="card-image">
+              <img
+                src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop"
+                alt="Meals"
+              />
+              <span class="card-title">Meals</span>
+            </div>
+            <div class="card-content">
+              <p>
+                Plan meals with macros. Add to home screen for quick access and
+                fast repeat visits.
+              </p>
+            </div>
+            <div class="card-action">
+              <a href="meals.html" class="deep-orange-text">Open Meals</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="footer-copyright">
-      <div class="container">© 2025 FitFuel</div>
-    </div>
-  </footer>
+    </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="app.js"></script>
+    <footer class="page-footer teal darken-4">
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <h6 class="white-text">FitFuel — Workout & Meal Tracker</h6>
+            <p class="grey-text text-lighten-4">
+              Demo prototype. Installable & offline-ready.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">© 2025 FitFuel</div>
+      </div>
+    </footer>
 
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+  
+    <main class="container">
+      <div class="section">
+        <h4>Dashboard</h4>
+        <div class="row" id="dashboard-cards"></div>
+        <div class="card">
+          <div class="card-content" style="height:300px">
+            <canvas id="calorie-chart" aria-label="Calories per day chart"></canvas>
+          </div>
+        </div>
+        <div id="favorites" class="grey-text"></div>
+      </div>
+
+      <div class="section">
+        <h5>Add Workout</h5>
+        <form id="form-workout">
+          <div class="row">
+            <div class="input-field col s12 m4">
+              <input name="name" id="wname" type="text" required>
+              <label for="wname">Workout name</label>
+            </div>
+            <div class="input-field col s6 m3">
+              <input name="minutes" id="wmin" type="number" min="0" required>
+              <label for="wmin">Minutes</label>
+            </div>
+            <div class="input-field col s6 m3">
+              <input name="date" id="wdate" type="date">
+              <label for="wdate" class="active">Date</label>
+            </div>
+            <div class="input-field col s12 m2">
+              <button class="btn waves-effect waves-light" type="submit"><i class="material-icons left">add</i>Add</button>
+            </div>
+          </div>
+        </form>
+        <ul class="collection" id="workout-list"></ul>
+      </div>
+
+      <div class="section">
+        <h5>Add Meal</h5>
+        <form id="form-meal">
+          <div class="row">
+            <div class="input-field col s12 m4">
+              <input name="name" id="mname" type="text" required>
+              <label for="mname">Meal name</label>
+            </div>
+            <div class="input-field col s6 m3">
+              <input name="calories" id="mcal" type="number" min="0" required>
+              <label for="mcal">Calories</label>
+            </div>
+            <div class="input-field col s6 m3">
+              <input name="protein" id="mpro" type="number" min="0">
+              <label for="mpro">Protein (g)</label>
+            </div>
+            <div class="input-field col s6 m3">
+              <input name="date" id="mdate" type="date">
+              <label for="mdate" class="active">Date</label>
+            </div>
+            <div class="input-field col s12 m2">
+              <button class="btn waves-effect waves-light" type="submit"><i class="material-icons left">add</i>Add</button>
+            </div>
+          </div>
+        </form>
+        <ul class="collection" id="meal-list"></ul>
+      </div>
+    </main>
+
+  </body>
 </html>
