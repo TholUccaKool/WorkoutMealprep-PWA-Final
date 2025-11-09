@@ -1,7 +1,8 @@
 {
-  "name": "FitFuel \u2014 Workout & Meal Tracker",
+  "name": "FitFuel — Workout & Meal Tracker",
   "short_name": "FitFuel",
-  "start_url": "index.html",
+  "description": "Track workouts and plan meal prep with offline support.",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#263238",
@@ -10,11 +11,6 @@
     {
       "src": "icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
       "type": "image/png"
     },
     {
@@ -28,11 +24,9 @@
       "type": "image/png"
     },
     {
-      "src": "icons/icon-512-maskable.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable any"
+      "type": "image/png"
     }
-  ],
-  "description": "Track workouts and plan meal prep with offline support."
+  ]
 }

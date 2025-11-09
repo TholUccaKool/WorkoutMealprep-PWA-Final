@@ -1,8 +1,42 @@
-/* Basic theme tweaks */
+/* hero back like your old version */
 .hero {
-  background: linear-gradient(120deg, #263238, #37474f);
-  padding: 64px 0;
+  background-color: #37474f;
+  padding: 100px 0;
+  color: #fff;
+  margin-bottom: 2rem;
 }
-.hero .btn-large { margin-top: 12px; }
-.card .card-image img { object-fit: cover; height: 220px; }
-.page-footer { margin-top: 48px; }
+
+.hero p {
+  color: #eceff1;
+}
+
+/* homepage equal cards ONLY */
+.row.equal-cards {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.equal-cards .col {
+  display: flex;
+}
+.row.equal-cards .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.row.equal-cards .card .card-image img {
+  height: 220px;
+  object-fit: cover;
+}
+.row.equal-cards .card .card-content {
+  flex-grow: 1;
+}
+.row.equal-cards .card .card-action {
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+/* meals page images */
+.card .card-image img {
+  width: 100%;
+  object-fit: cover;
+}

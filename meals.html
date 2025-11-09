@@ -1,89 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-  <title>FitFuel — Workout & Meal Tracker</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css">
-  <meta name="theme-color" content="#263238">
-
-</head>
-<body>
-  <div class="navbar-fixed">
-    <nav class="teal darken-4">
-      <div class="nav-wrapper container">
-        <a href="index.html" class="brand-logo">FitFuel</a>
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="workouts.html"><i class="material-icons left">fitness_center</i>Workouts</a></li>
-          <li><a href="meals.html"><i class="material-icons left">restaurant</i>Meals</a></li>
-          <li><a href="about.html"><i class="material-icons left">info</i>About</a></li>
-        </ul>
-      </div>
-    </nav>
-  </div>
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="workouts.html"><i class="material-icons left">fitness_center</i>Workouts</a></li>
-    <li><a href="meals.html"><i class="material-icons left">restaurant</i>Meals</a></li>
-    <li><a href="about.html"><i class="material-icons left">info</i>About</a></li>
-  </ul>
-
-
-<main class="container section">
-  <h4><i class="material-icons left">restaurant</i>Meals</h4>
-  <p class="grey-text">Demo meal plan cards with macros. Placeholder images & text.</p>
-
-  <div class="row">
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1543332164-6e82f355bad3?q=80&w=1200&auto=format&fit=crop" alt="Chicken Bowl">
-          <span class="card-title">Grilled Chicken Bowl</span>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meals — FitFuel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- navbar -->
+    <div class="navbar-fixed">
+      <nav class="teal darken-4">
+        <div class="nav-wrapper container">
+          <a href="index.html" class="brand-logo">FitFuel</a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+            ><i class="material-icons">menu</i></a
+          >
+          <ul class="right hide-on-med-and-down">
+            <li>
+              <a href="workouts.html"
+                ><i class="material-icons left">fitness_center</i>Workouts</a
+              >
+            </li>
+            <li class="active">
+              <a href="meals.html"
+                ><i class="material-icons left">restaurant</i>Meals</a
+              >
+            </li>
+            <li>
+              <a href="about.html"
+                ><i class="material-icons left">info</i>About</a
+              >
+            </li>
+          </ul>
         </div>
-        <div class="card-content">
-          <p>Protein 45g · Carbs 55g · Fat 12g · 520 kcal</p>
-        </div>
-        <div class="card-action">
-          <a href="#" class="deep-orange-text">Add to Plan</a>
-        </div>
-      </div>
+      </nav>
     </div>
-    <div class="col s12 m6">
-      <div class="card">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop" alt="Veggie Pasta">
-          <span class="card-title">Veggie Pasta</span>
-        </div>
-        <div class="card-content">
-          <p>Protein 20g · Carbs 70g · Fat 10g · 460 kcal</p>
-        </div>
-        <div class="card-action">
-          <a href="#" class="deep-orange-text">Add to Plan</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="workouts.html">Workouts</a></li>
+      <li><a href="meals.html">Meals</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
 
-  <footer class="page-footer teal darken-4">
-    <div class="container">
+    <main class="container section">
       <div class="row">
         <div class="col s12">
-          <h6 class="white-text">FitFuel — Workout & Meal Tracker</h6>
-          <p class="grey-text text-lighten-4">Demo prototype. Installable & offline-ready.</p>
+          <h4><i class="material-icons left">restaurant</i>Meals</h4>
+          <p class="grey-text">
+            Demo meal plan cards with macros. Works offline, syncs when back
+            online.
+          </p>
         </div>
       </div>
-    </div>
-    <div class="footer-copyright">
-      <div class="container">© 2025 FitFuel</div>
-    </div>
-  </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="app.js"></script>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="card hoverable">
+            <div class="card-image">
+              <img
+                src="https://images.unsplash.com/photo-1604908176997-1251882e9b22?q=80&w=1200&auto=format&fit=crop"
+                alt="Chicken Bowl"
+              />
+              <span class="card-title">Chicken Bowl</span>
+            </div>
+            <div class="card-content">
+              Protein 45g · Carbs 55g · Fat 12g · 520 kcal
+            </div>
+            <div class="card-action">
+              <a href="#!" class="deep-orange-text text-darken-2 add-to-plan"
+                >ADD TO PLAN</a
+              >
+            </div>
+          </div>
+        </div>
 
-</body>
+        <div class="col s12 m6">
+          <div class="card hoverable">
+            <div class="card-image">
+              <img
+                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop"
+                alt="Veggie pasta"
+              />
+              <span class="card-title">Veggie Pasta</span>
+            </div>
+            <div class="card-content">
+              Protein 20g · Carbs 70g · Fat 10g · 460 kcal
+            </div>
+            <div class="card-action">
+              <a href="#!" class="deep-orange-text text-darken-2 add-to-plan"
+                >ADD TO PLAN</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer teal darken-4">
+      <div class="container">
+        <p class="grey-text text-lighten-4">
+          FitFuel — installable & offline-ready.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>

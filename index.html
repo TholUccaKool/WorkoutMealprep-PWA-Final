@@ -7,6 +7,8 @@
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
     <title>FitFuel — Workout & Meal Tracker</title>
+
+    <!-- Materialize -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
@@ -15,16 +17,16 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
       rel="stylesheet"
     />
+
+    <!-- PWA -->
     <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="stylesheet" href="style.css" />
     <meta name="theme-color" content="#263238" />
 
-    <meta
-      name="description"
-      content="Track workouts and meals with an installable, offline-capable PWA prototype built with Materialize CSS."
-    />
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- navbar -->
     <div class="navbar-fixed">
       <nav class="teal darken-4">
         <div class="nav-wrapper container">
@@ -53,21 +55,12 @@
       </nav>
     </div>
     <ul class="sidenav" id="mobile-demo">
-      <li>
-        <a href="workouts.html"
-          ><i class="material-icons left">fitness_center</i>Workouts</a
-        >
-      </li>
-      <li>
-        <a href="meals.html"
-          ><i class="material-icons left">restaurant</i>Meals</a
-        >
-      </li>
-      <li>
-        <a href="about.html"><i class="material-icons left">info</i>About</a>
-      </li>
+      <li><a href="workouts.html">Workouts</a></li>
+      <li><a href="meals.html">Meals</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
 
+    <!-- hero -->
     <header class="hero">
       <div class="container">
         <h3 class="white-text">Fuel your fitness, anywhere.</h3>
@@ -76,15 +69,16 @@
           Install FitFuel to your home screen.
         </p>
         <a
-          href="workouts.html"
+          href="#dashboard"
           class="btn-large waves-effect waves-light deep-orange"
           >Start Logging</a
         >
       </div>
     </header>
 
+    <!-- cards -->
     <main class="container section">
-      <div class="row">
+      <div class="row equal-cards">
         <div class="col s12 m6">
           <div class="card hoverable">
             <div class="card-image">
@@ -101,7 +95,9 @@
               </p>
             </div>
             <div class="card-action">
-              <a href="workouts.html" class="deep-orange-text">Open Workouts</a>
+              <a href="workouts.html" class="deep-orange-text text-darken-2"
+                >OPEN WORKOUTS</a
+              >
             </div>
           </div>
         </div>
@@ -121,40 +117,26 @@
               </p>
             </div>
             <div class="card-action">
-              <a href="meals.html" class="deep-orange-text">Open Meals</a>
+              <a href="meals.html" class="deep-orange-text text-darken-2"
+                >OPEN MEALS</a
+              >
             </div>
           </div>
         </div>
       </div>
     </main>
 
-    <footer class="page-footer teal darken-4">
-      <div class="container">
-        <div class="row">
-          <div class="col s12">
-            <h6 class="white-text">FitFuel — Workout & Meal Tracker</h6>
-            <p class="grey-text text-lighten-4">
-              Demo prototype. Installable & offline-ready.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        <div class="container">© 2025 FitFuel</div>
-      </div>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="app.js"></script>
-  
-    <main class="container">
+    <!-- dashboard + forms -->
+    <main class="container section" id="dashboard">
       <div class="section">
         <h4>Dashboard</h4>
         <div class="row" id="dashboard-cards"></div>
         <div class="card">
-          <div class="card-content" style="height:300px">
-            <canvas id="calorie-chart" aria-label="Calories per day chart"></canvas>
+          <div class="card-content" style="height: 300px">
+            <canvas
+              id="calorie-chart"
+              aria-label="Calories per day chart"
+            ></canvas>
           </div>
         </div>
         <div id="favorites" class="grey-text"></div>
@@ -165,19 +147,21 @@
         <form id="form-workout">
           <div class="row">
             <div class="input-field col s12 m4">
-              <input name="name" id="wname" type="text" required>
+              <input name="name" id="wname" type="text" required />
               <label for="wname">Workout name</label>
             </div>
             <div class="input-field col s6 m3">
-              <input name="minutes" id="wmin" type="number" min="0" required>
+              <input name="minutes" id="wmin" type="number" min="0" required />
               <label for="wmin">Minutes</label>
             </div>
             <div class="input-field col s6 m3">
-              <input name="date" id="wdate" type="date">
+              <input name="date" id="wdate" type="date" />
               <label for="wdate" class="active">Date</label>
             </div>
             <div class="input-field col s12 m2">
-              <button class="btn waves-effect waves-light" type="submit"><i class="material-icons left">add</i>Add</button>
+              <button class="btn waves-effect waves-light" type="submit">
+                <i class="material-icons left">add</i>Add
+              </button>
             </div>
           </div>
         </form>
@@ -189,23 +173,25 @@
         <form id="form-meal">
           <div class="row">
             <div class="input-field col s12 m4">
-              <input name="name" id="mname" type="text" required>
+              <input name="name" id="mname" type="text" required />
               <label for="mname">Meal name</label>
             </div>
             <div class="input-field col s6 m3">
-              <input name="calories" id="mcal" type="number" min="0" required>
+              <input name="calories" id="mcal" type="number" min="0" required />
               <label for="mcal">Calories</label>
             </div>
             <div class="input-field col s6 m3">
-              <input name="protein" id="mpro" type="number" min="0">
+              <input name="protein" id="mpro" type="number" min="0" />
               <label for="mpro">Protein (g)</label>
             </div>
             <div class="input-field col s6 m3">
-              <input name="date" id="mdate" type="date">
+              <input name="date" id="mdate" type="date" />
               <label for="mdate" class="active">Date</label>
             </div>
             <div class="input-field col s12 m2">
-              <button class="btn waves-effect waves-light" type="submit"><i class="material-icons left">add</i>Add</button>
+              <button class="btn waves-effect waves-light" type="submit">
+                <i class="material-icons left">add</i>Add
+              </button>
             </div>
           </div>
         </form>
@@ -213,5 +199,25 @@
       </div>
     </main>
 
+    <footer class="page-footer teal darken-4">
+      <div class="container">
+        <p class="grey-text text-lighten-4">
+          FitFuel — installable & offline-ready.
+        </p>
+      </div>
+    </footer>
+
+    <!-- scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Firebase (compat) -->
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+
+    <!-- Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- app -->
+    <script src="app.js"></script>
   </body>
 </html>
