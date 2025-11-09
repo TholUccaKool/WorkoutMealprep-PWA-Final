@@ -1,5 +1,5 @@
 // ===============================
-// 0. SERVICE WORKER
+// 0. SERVICE WORKER REGISTER
 // ===============================
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -15,35 +15,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const sidenavs = document.querySelectorAll(".sidenav");
   M.Sidenav.init(sidenavs);
 
-  // workout / meal collapsibles
+  // collapsibles (if used in workouts/meals pages)
   const collapsibles = document.querySelectorAll(".collapsible");
   M.Collapsible.init(collapsibles);
 
-  // modals (for "Log set", "Add to plan", etc.)
+  // modals (if you add some later)
   const modals = document.querySelectorAll(".modal");
   M.Modal.init(modals);
 
-  // if you had any <select> in those modals
+  // selects
   const selects = document.querySelectorAll("select");
   M.FormSelect.init(selects);
 });
 
-// Handle click events like "Add to Plan"
-document.addEventListener("click", (e) => {
-  if (e.target.matches(".add-to-plan")) {
-    e.preventDefault();
-    M.toast({ html: "Meal added to plan (offline-ready)" });
-  }
-
-  if (e.target.matches(".log-set")) {
-    e.preventDefault();
-    M.toast({ html: "Workout set logged!" });
-  }
-});
-
 // ===============================
-// 2. FIREBASE (compat) INIT
-//    (you already added the script tags in index.html)
+// 2. FIREBASE (COMPAT) INIT
 // ===============================
 const firebaseConfig = {
   apiKey: "AIzaSyBn20aFdvciVPuR7OqbsmVNUgSf3TkgY98",
@@ -54,7 +40,6 @@ const firebaseConfig = {
   appId: "1:13166000407:web:86535eeef76b2989065f52",
 };
 
-// global "firebase" is available because of firebase-app-compat.js
 const appFB = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -77,7 +62,6 @@ function openIDB() {
       if (!db.objectStoreNames.contains("meals")) {
         db.createObjectStore("meals", { keyPath: "id" });
       }
-      // holds items created offline that we must push to Firebase later
       if (!db.objectStoreNames.contains("pendingSync")) {
         db.createObjectStore("pendingSync", { keyPath: "id" });
       }
@@ -110,6 +94,16 @@ async function idbGetAll(store) {
   });
 }
 
+async function idbGet(store, id) {
+  const db = await openIDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(store, "readonly");
+    const req = tx.objectStore(store).get(id);
+    req.onsuccess = () => resolve(req.result || null);
+    req.onerror = (e) => reject(e);
+  });
+}
+
 async function idbDelete(store, id) {
   const db = await openIDB();
   return new Promise((resolve, reject) => {
@@ -121,78 +115,63 @@ async function idbDelete(store, id) {
 }
 
 // ===============================
-// 4. ONLINE/OFFLINE UTIL
+// 4. ONLINE / OFFLINE
 // ===============================
 function isOnline() {
   return navigator.onLine;
 }
 
 window.addEventListener("online", () => {
-  console.log("✅ Back online — syncing…");
+  console.log("Back online → syncing pending items...");
   syncAllPending();
 });
 
 // ===============================
-// 5. FIREBASE HELPERS
+// 5. SYNC LOGIC
 // ===============================
-async function createWorkoutOnline(workout) {
-  const ref = await db.collection("workouts").add(workout);
-  return { ...workout, id: ref.id };
-}
-
-async function createMealOnline(meal) {
-  const ref = await db.collection("meals").add(meal);
-  return { ...meal, id: ref.id };
-}
-
-// upload one pending offline record to Firebase
-async function syncPendingItem(item) {
-  const { id, type, ...data } = item;
-  if (type === "workout") {
-    const ref = await db.collection("workouts").add(data);
-    return { oldId: id, newId: ref.id };
-  }
-  if (type === "meal") {
-    const ref = await db.collection("meals").add(data);
-    return { oldId: id, newId: ref.id };
-  }
-  return null;
-}
-
-// upload everything in pendingSync
 async function syncAllPending() {
   const pending = await idbGetAll("pendingSync");
-  if (!pending.length) return;
+  if (!pending || pending.length === 0) return;
 
   for (const item of pending) {
     try {
-      const res = await syncPendingItem(item);
-      if (res) {
-        await idbDelete("pendingSync", item.id);
+      const col = item.collection;
+      const id = item.id;
+      const op = item.op || "create";
+      const copy = { ...item };
+      delete copy.collection;
+      delete copy.op;
+
+      const ref = db.collection(col).doc(id);
+
+      if (op === "update") {
+        await ref.set(copy, { merge: true });
+      } else {
+        await ref.set(copy);
       }
+
+      await idbDelete("pendingSync", id);
     } catch (err) {
-      console.warn("Sync failed for", item, err);
+      console.warn("Could not sync item:", item, err);
     }
   }
 
-  if (pending.length) {
-    M.toast({ html: "Offline data synced to Firebase" });
-  }
-
-  // refresh UI with latest data from Firebase
+  M.toast({ html: "Offline data synced to Firebase" });
   loadAllDataToUI();
 }
 
 // ===============================
-// 6. LOAD DATA (IDB → UI, then Firebase → UI)
+// 6. LOAD DATA TO UI
 // ===============================
+let caloriesChart = null;
+
 async function loadAllDataToUI() {
-  // show whatever we have in browser first
+  // show IndexedDB immediately
   const workoutsLocal = await idbGetAll("workouts");
   const mealsLocal = await idbGetAll("meals");
   renderUI(workoutsLocal, mealsLocal);
 
-  // if online, get fresh from Firebase and update IDB
+  // if online, refresh from Firebase
   if (isOnline()) {
     const wSnap = await db.collection("workouts").get();
     const workoutsOnline = wSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -206,59 +185,89 @@ async function loadAllDataToUI() {
   }
 }
 
-// ===============================
-// 7. RENDERING (lists + dashboard + chart)
-// ===============================
-let caloriesChart = null;
-
 function renderUI(workouts, meals) {
-  // workout list
-  const wList = document.getElementById("workout-list");
-  if (wList) {
-    wList.innerHTML =
-      workouts
-        .map(
-          (w) => `
-      <li class="collection-item">
-        <span><b>${w.name}</b> — ${w.minutes || 0} min 
-        <small class="grey-text">${w.date || ""}</small></span>
-      </li>`
-        )
-        .join("") || '<li class="collection-item">No workouts yet.</li>';
-  }
-
-  // meal list
-  const mList = document.getElementById("meal-list");
-  if (mList) {
-    mList.innerHTML =
-      meals
-        .map(
-          (m) => `
-      <li class="collection-item">
-        <span><b>${m.name}</b> — ${m.calories || 0} kcal, ${
-            m.protein || 0
-          }g protein 
-        <small class="grey-text">${m.date || ""}</small></span>
-      </li>`
-        )
-        .join("") || '<li class="collection-item">No meals yet.</li>';
-  }
-
-  // favorites (if you had favorite: true)
-  const favEl = document.getElementById("favorites");
-  if (favEl) {
-    const favW = workouts.filter((w) => w.favorite);
-    const favM = meals.filter((m) => m.favorite);
-    favEl.innerHTML = `
-      <p><b>Favorite workouts:</b> ${
-        favW.map((x) => x.name).join(", ") || "—"
-      }</p>
-      <p><b>Favorite meals:</b> ${favM.map((x) => x.name).join(", ") || "—"}</p>
-    `;
-  }
-
+  renderWorkouts(workouts);
+  renderMeals(meals);
   updateDashboard(workouts, meals);
   renderCaloriesChart(meals);
+  renderFavorites(workouts, meals);
+}
+
+function renderWorkouts(workouts) {
+  const wList = document.getElementById("workout-list");
+  if (!wList) return;
+
+  if (!workouts || workouts.length === 0) {
+    wList.innerHTML = '<li class="collection-item">No workouts yet.</li>';
+    return;
+  }
+
+  wList.innerHTML = workouts
+    .map(
+      (w) => `
+      <li class="collection-item">
+        <span><b>${w.name}</b> — ${
+        w.minutes || 0
+      } min <small class="grey-text">${w.date || ""}</small></span>
+        <a href="#!" class="secondary-content red-text delete-workout" data-id="${
+          w.id
+        }">
+          <i class="material-icons">delete</i>
+        </a>
+        <a href="#!" class="secondary-content edit-workout" data-id="${
+          w.id
+        }" style="margin-right:40px">
+          <i class="material-icons">edit</i>
+        </a>
+      </li>
+    `
+    )
+    .join("");
+}
+
+function renderMeals(meals) {
+  const mList = document.getElementById("meal-list");
+  if (!mList) return;
+
+  if (!meals || meals.length === 0) {
+    mList.innerHTML = '<li class="collection-item">No meals yet.</li>';
+    return;
+  }
+
+  mList.innerHTML = meals
+    .map(
+      (m) => `
+      <li class="collection-item">
+        <span><b>${m.name}</b> — ${
+        m.calories || 0
+      } kcal <small class="grey-text">${m.date || ""}</small></span>
+        <a href="#!" class="secondary-content red-text delete-meal" data-id="${
+          m.id
+        }">
+          <i class="material-icons">delete</i>
+        </a>
+        <a href="#!" class="secondary-content edit-meal" data-id="${
+          m.id
+        }" style="margin-right:40px">
+          <i class="material-icons">edit</i>
+        </a>
+      </li>
+    `
+    )
+    .join("");
+}
+
+function renderFavorites(workouts, meals) {
+  const favEl = document.getElementById("favorites");
+  if (!favEl) return;
+  const favW = workouts.filter((w) => w.favorite);
+  const favM = meals.filter((m) => m.favorite);
+  favEl.innerHTML = `
+    <p><b>Favorite workouts:</b> ${
+      favW.map((x) => x.name).join(", ") || "—"
+    }</p>
+    <p><b>Favorite meals:</b> ${favM.map((x) => x.name).join(", ") || "—"}</p>
+  `;
 }
 
 function getLast7Dates() {
@@ -277,7 +286,6 @@ function updateDashboard(workouts, meals) {
   if (!container) return;
 
   const last7 = getLast7Dates();
-
   const workouts7 = workouts.filter((w) => last7.includes(w.date)).length;
   const meals7 = meals.filter((m) => last7.includes(m.date)).length;
   const calories7 = meals
@@ -316,11 +324,11 @@ function renderCaloriesChart(meals) {
   const ctx = document.getElementById("calorie-chart");
   if (!ctx || !window.Chart) return;
 
-  const last7 = getLast7Dates().reverse(); // oldest → newest
+  const last7 = getLast7Dates().reverse();
   const labels = last7.map((d) => d.slice(5));
-  const data = last7.map((d) =>
+  const data = last7.map((date) =>
     meals
-      .filter((m) => m.date === d)
+      .filter((m) => m.date === date)
       .reduce((sum, m) => sum + (Number(m.calories) || 0), 0)
   );
 
@@ -345,23 +353,30 @@ function renderCaloriesChart(meals) {
 }
 
 // ===============================
-// 8. FORM SUBMIT HANDLERS
+// 7. FORM HANDLERS (CREATE + UPDATE)
 // ===============================
-document.addEventListener("submit", async (e) => {
-  const form = e.target;
+function generateId() {
+  return crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now();
+}
 
-  // WORKOUT FORM
-  if (form.id === "form-workout") {
+// WORKOUT FORM
+const workoutForm = document.getElementById("form-workout");
+if (workoutForm) {
+  workoutForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = form.querySelector("[name=name]").value.trim();
-    const minutes = Number(form.querySelector("[name=minutes]").value || 0);
+
+    const idField = document.getElementById("workout-id");
+    const existingId = idField ? idField.value.trim() : "";
+    const name = document.getElementById("wname").value.trim();
+    const minutes = Number(document.getElementById("wmin").value || 0);
     const date =
-      form.querySelector("[name=date]").value ||
+      document.getElementById("wdate").value ||
       new Date().toISOString().slice(0, 10);
 
     if (!name) return;
 
     const workout = {
+      id: existingId || generateId(),
       name,
       minutes,
       date,
@@ -369,51 +384,53 @@ document.addEventListener("submit", async (e) => {
       createdAt: new Date().toISOString(),
     };
 
+    // always update local
+    await idbPut("workouts", workout);
+
     if (isOnline()) {
-      try {
-        const saved = await createWorkoutOnline(workout);
-        await idbPut("workouts", saved);
-      } catch (err) {
-        // firebase failed → store offline
-        const offlineItem = {
-          ...workout,
-          id: crypto.randomUUID(),
-          type: "workout",
-        };
-        await idbPut("workouts", offlineItem);
-        await idbPut("pendingSync", offlineItem);
-      }
+      // if editing → merge, else create
+      await db
+        .collection("workouts")
+        .doc(workout.id)
+        .set(workout, { merge: true })
+        .catch((err) => console.warn("Firebase write failed", err));
     } else {
-      // offline → store and mark for sync
-      const offlineItem = {
+      // offline → mark for sync
+      await idbPut("pendingSync", {
         ...workout,
-        id: crypto.randomUUID(),
-        type: "workout",
-      };
-      await idbPut("workouts", offlineItem);
-      await idbPut("pendingSync", offlineItem);
+        collection: "workouts",
+        op: existingId ? "update" : "create",
+      });
       M.toast({ html: "Offline — will sync later" });
     }
 
-    form.reset();
+    workoutForm.reset();
+    if (idField) idField.value = "";
     M.updateTextFields();
     loadAllDataToUI();
-    M.toast({ html: "Workout saved" });
-  }
+    M.toast({ html: existingId ? "Workout updated" : "Workout saved" });
+  });
+}
 
-  // MEAL FORM
-  if (form.id === "form-meal") {
+// MEAL FORM
+const mealForm = document.getElementById("form-meal");
+if (mealForm) {
+  mealForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = form.querySelector("[name=name]").value.trim();
-    const calories = Number(form.querySelector("[name=calories]").value || 0);
-    const protein = Number(form.querySelector("[name=protein]").value || 0);
+
+    const idField = document.getElementById("meal-id");
+    const existingId = idField ? idField.value.trim() : "";
+    const name = document.getElementById("mname").value.trim();
+    const calories = Number(document.getElementById("mcal").value || 0);
+    const protein = Number(document.getElementById("mpro").value || 0);
     const date =
-      form.querySelector("[name=date]").value ||
+      document.getElementById("mdate").value ||
       new Date().toISOString().slice(0, 10);
 
     if (!name) return;
 
     const meal = {
+      id: existingId || generateId(),
       name,
       calories,
       protein,
@@ -422,37 +439,137 @@ document.addEventListener("submit", async (e) => {
       createdAt: new Date().toISOString(),
     };
 
+    await idbPut("meals", meal);
+
     if (isOnline()) {
-      try {
-        const saved = await createMealOnline(meal);
-        await idbPut("meals", saved);
-      } catch (err) {
-        const offlineItem = {
-          ...meal,
-          id: crypto.randomUUID(),
-          type: "meal",
-        };
-        await idbPut("meals", offlineItem);
-        await idbPut("pendingSync", offlineItem);
-      }
+      await db
+        .collection("meals")
+        .doc(meal.id)
+        .set(meal, { merge: true })
+        .catch((err) => console.warn("Firebase write failed", err));
     } else {
-      const offlineItem = {
+      await idbPut("pendingSync", {
         ...meal,
-        id: crypto.randomUUID(),
-        type: "meal",
-      };
-      await idbPut("meals", offlineItem);
-      await idbPut("pendingSync", offlineItem);
+        collection: "meals",
+        op: existingId ? "update" : "create",
+      });
       M.toast({ html: "Offline — will sync later" });
     }
 
-    form.reset();
+    mealForm.reset();
+    if (idField) idField.value = "";
     M.updateTextFields();
     loadAllDataToUI();
-    M.toast({ html: "Meal saved" });
+    M.toast({ html: existingId ? "Meal updated" : "Meal saved" });
+  });
+}
+
+// ===============================
+// 8. CLICK HANDLERS (delete, edit trigger, add-to-plan)
+// ===============================
+document.addEventListener("click", async (e) => {
+  // toast for meals
+  if (e.target.matches(".add-to-plan") || e.target.closest(".add-to-plan")) {
+    e.preventDefault();
+    M.toast({ html: "Meal added to plan (offline-ready)" });
+  }
+
+  // DELETE WORKOUT
+  if (e.target.closest(".delete-workout")) {
+    e.preventDefault();
+    const id = e.target.closest(".delete-workout").dataset.id;
+    await idbDelete("workouts", id);
+    if (isOnline()) {
+      try {
+        await db.collection("workouts").doc(id).delete();
+      } catch (err) {
+        console.warn("Could not delete from Firebase", err);
+      }
+    }
+    loadAllDataToUI();
+    M.toast({ html: "Workout deleted" });
+  }
+
+  // DELETE MEAL
+  if (e.target.closest(".delete-meal")) {
+    e.preventDefault();
+    const id = e.target.closest(".delete-meal").dataset.id;
+    await idbDelete("meals", id);
+    if (isOnline()) {
+      try {
+        await db.collection("meals").doc(id).delete();
+      } catch (err) {
+        console.warn("Could not delete from Firebase", err);
+      }
+    }
+    loadAllDataToUI();
+    M.toast({ html: "Meal deleted" });
+  }
+
+  // EDIT WORKOUT → load into form (only if form exists on this page)
+  if (e.target.closest(".edit-workout")) {
+    e.preventDefault();
+    const id = e.target.closest(".edit-workout").dataset.id;
+    const item = await idbGet("workouts", id);
+
+    const idField = document.getElementById("workout-id");
+    const nameField = document.getElementById("wname");
+    const minField = document.getElementById("wmin");
+    const dateField = document.getElementById("wdate");
+
+    // if we're on a page that doesn't have the form, just ignore
+    if (item && idField && nameField && minField && dateField) {
+      idField.value = item.id;
+      nameField.value = item.name || "";
+      minField.value = item.minutes || "";
+      dateField.value = item.date || "";
+      M.updateTextFields();
+      M.toast({ html: "Editing workout..." });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
+  // EDIT MEAL → load into form (only if form exists on this page)
+  if (e.target.closest(".edit-meal")) {
+    e.preventDefault();
+    const id = e.target.closest(".edit-meal").dataset.id;
+    const item = await idbGet("meals", id);
+
+    const idField = document.getElementById("meal-id");
+    const nameField = document.getElementById("mname");
+    const calField = document.getElementById("mcal");
+    const proField = document.getElementById("mpro");
+    const dateField = document.getElementById("mdate");
+
+    if (item && idField && nameField && calField && proField && dateField) {
+      idField.value = item.id;
+      nameField.value = item.name || "";
+      calField.value = item.calories || "";
+      proField.value = item.protein || "";
+      dateField.value = item.date || "";
+      M.updateTextFields();
+      M.toast({ html: "Editing meal..." });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 });
 
+// edit meal → load into form
+if (e.target.closest(".edit-meal")) {
+  e.preventDefault();
+  const id = e.target.closest(".edit-meal").dataset.id;
+  const item = await idbGet("meals", id);
+  if (item) {
+    document.getElementById("meal-id").value = item.id;
+    document.getElementById("mname").value = item.name || "";
+    document.getElementById("mcal").value = item.calories || "";
+    document.getElementById("mpro").value = item.protein || "";
+    document.getElementById("mdate").value = item.date || "";
+    M.updateTextFields();
+    M.toast({ html: "Editing meal..." });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
 // ===============================
 // 9. INITIAL LOAD
 // ===============================
