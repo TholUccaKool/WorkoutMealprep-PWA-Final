@@ -359,6 +359,11 @@ if (workoutForm) {
       });
       M.toast({ html: "Offline — will sync later" });
     }
+    if (existingId) {
+      M.toast({ html: "Workout updated successfully!" });
+    } else {
+      M.toast({ html: "New workout added!" });
+    }
 
     workoutForm.reset();
     if (idField) idField.value = "";
@@ -408,6 +413,12 @@ if (mealForm) {
       M.toast({ html: "Offline — will sync later" });
     }
 
+    if (existingId) {
+      M.toast({ html: "Meal updated successfully!" });
+    } else {
+      M.toast({ html: "New meal added!" });
+    }
+
     mealForm.reset();
     if (idField) idField.value = "";
     M.updateTextFields();
@@ -419,7 +430,7 @@ if (mealForm) {
 // 9. CLICK HANDLERS (edit/delete)
 // =====================================
 document.addEventListener("click", async (e) => {
-  // delete workout
+  // --- delete workout ---
   if (e.target.closest(".delete-workout")) {
     const id = e.target.closest(".delete-workout").dataset.id;
     await idbDelete("workouts", id);
@@ -430,7 +441,7 @@ document.addEventListener("click", async (e) => {
     M.toast({ html: "Workout deleted" });
   }
 
-  // delete meal
+  // --- delete meal ---
   if (e.target.closest(".delete-meal")) {
     const id = e.target.closest(".delete-meal").dataset.id;
     await idbDelete("meals", id);
@@ -441,9 +452,10 @@ document.addEventListener("click", async (e) => {
     M.toast({ html: "Meal deleted" });
   }
 
-  // edit workout
+  // --- edit workout ---
   if (e.target.closest(".edit-workout")) {
     const id = e.target.closest(".edit-workout").dataset.id;
+    console.log("edit workout clicked for id:", id); // <--- to verify
     const item = await idbGet("workouts", id);
     if (item) {
       const idField = document.getElementById("workout-id");
@@ -456,14 +468,16 @@ document.addEventListener("click", async (e) => {
         minField.value = item.minutes || "";
         dateField.value = item.date || "";
         M.updateTextFields();
+        M.toast({ html: "Editing workout..." }); // <-- the toast
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
   }
 
-  // edit meal
+  // --- edit meal ---
   if (e.target.closest(".edit-meal")) {
     const id = e.target.closest(".edit-meal").dataset.id;
+    console.log("edit meal clicked for id:", id); // <--- to verify
     const item = await idbGet("meals", id);
     if (item) {
       const idField = document.getElementById("meal-id");
@@ -478,12 +492,13 @@ document.addEventListener("click", async (e) => {
         proField.value = item.protein || "";
         dateField.value = item.date || "";
         M.updateTextFields();
+        M.toast({ html: "Editing meal..." }); // <-- the toast
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
   }
 
-  // add-to-plan toast (meals page buttons)
+  // --- add-to-plan toast (meals page) ---
   if (e.target.matches(".add-to-plan") || e.target.closest(".add-to-plan")) {
     e.preventDefault();
     M.toast({ html: "Meal added to plan (offline-ready)" });
