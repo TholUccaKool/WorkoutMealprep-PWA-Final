@@ -107,7 +107,7 @@ It integrates **Firebase Firestore** for cloud data storage and **IndexedDB** fo
 ## 👨‍💻 Developer
 **Thol Ucca Kool (UK)**  
 Senior Computer Science Student — Fort Hays State University  
-Email: tholuccakool@gmail.com  
+Email: uccakoolthol@gmail.com  
 
 ---
 
