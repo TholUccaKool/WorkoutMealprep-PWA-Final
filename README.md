@@ -1,173 +1,133 @@
-🔥 FitFuel — Progressive Web App (PWA)
-Mobile Web Development – INF654
-Final Project by Thol Ucca Kool
-📌 1. Overview
+# **FitFuel — Progressive Web App (Final Project)**
 
-FitFuel is a fully installable Progressive Web App (PWA) that helps users track workouts and meals, even without internet access.
-It features real-time syncing, secure authentication, offline persistence, and a clean Material UI design.
+A fully offline-capable fitness tracking PWA built with Firebase, IndexedDB, Materialize CSS, and a service worker. Users can log workouts and meals, sync data online, and install the app on any device.
 
-🛠 2. Technologies Used
-Core Stack
+---
 
-HTML, CSS, JavaScript
+## **📌 Features**
 
-Materialize CSS (UI components)
+* Offline + online support
+* Firebase Authentication
+* User-specific Firestore data
+* IndexedDB offline storage
+* Auto-sync when online
+* Installable PWA
+* Dashboard with charts
+* Responsive UI
+* CRUD for workouts and meals
 
-Chart.js (data visualization)
+---
 
-Firebase Authentication (email/password login)
+## **📱 PWA Capabilities**
 
-Firebase Firestore (cloud database)
+* `manifest.webmanifest` for installation
+* Service worker caching for offline use
+* Fully functional when disconnected from the internet
 
-IndexedDB (offline storage)
+---
 
-Service Worker + Cache API
+## **🗄️ Data Storage**
 
-PWA Manifest
+### **Online (Firebase Firestore)**
 
-🔐 3. Authentication
+* All meals and workouts saved under each user’s UID
+* Secure, per-user cloud sync
+* Automatic merging of offline data
 
-FitFuel uses Firebase Email/Password Authentication.
+### **Offline (IndexedDB)**
 
-✔ Sign Up
-✔ Sign In
-✔ Sign Out
-✔ UID-based data isolation (every user only sees their own data)
-✔ Automatic redirects after login/logout
+* Stores workouts and meals when offline
+* Saves pending changes in `pendingSync` store
+* Syncs automatically when the user goes online
+* Prevents duplicates using consistent Firebase IDs
 
-📦 4. Data Storage System
-🌐 Online Mode — Firestore
+---
 
-Stores workouts & meals in user-specific collections
+## **🔐 Authentication**
 
-Data includes: name, calories/minutes, protein, date, createdAt, UID
+* Email + Password login
+* Sign up, sign in, sign out
+* Only authenticated users can view their workouts/meals
+* Data is fully isolated per user
 
-Supports update & delete operations
+---
 
-📴 Offline Mode — IndexedDB
+## **📊 Dashboard**
 
-Stores workouts + meals locally
+Shows last 7 days of:
 
-Stores pending operations inside pendingSync
+* Total workouts
+* Total meals
+* Total calorie count
+* Bar chart powered by Chart.js
 
-Works even with 0 internet
+---
 
-🔄 Sync Logic
+## **⚙️ Technologies Used**
 
-When the app reconnects:
+* **HTML, CSS, JavaScript**
+* **Materialize CSS**
+* **Chart.js**
+* **Firebase Authentication**
+* **Firestore Database**
+* **IndexedDB**
+* **Service Worker**
+* **Progressive Web App techniques**
 
-Read all pending operations
+---
 
-Apply them to Firestore
+## **🧠 Challenges & Solutions**
 
-Clear them from IndexedDB
+### **1. Syncing Offline + Online Data**
 
-Refresh UI
+Solved using:
 
-Show “Offline data synced” toast
+* IndexedDB pendingSync queue
+* `syncAllPending()` on reconnect
+* Firebase merge writes
 
-📊 5. Core Features
-Workout Tracking
+### **2. Authentication Redirect Bug**
 
-Add workouts
+Solved by:
 
-Edit workouts
+* Checking auth state in `onAuthStateChanged()`
+* Redirecting to home after login
 
-Delete workouts
+### **3. Caching Issues**
 
-Store duration + date
+Fixed by:
 
-Meal Tracking
+* Updating service worker version
+* Clearing browser storage during testing
 
-Add meals
+---
 
-Edit meals
+## **💡 Lessons Learned**
 
-Delete meals
+* How to build an installable PWA
+* How Firebase Auth works
+* Offline-first design patterns
+* Service worker caching strategies
+* Sync logic & conflict prevention
 
-Track calories, protein, date
+---
 
-Dashboard
+## **🚀 Future Improvements**
 
-Activity summary (last 7 days)
+* Push notifications
+* Weekly analytics
+* More macro tracking
+* Wearable device integration
+* Dark mode
 
-Meal summary (last 7 days)
+---
 
-Total weekly calories
+## **📁 Repository**
 
-Calorie bar chart (Chart.js)
+GitHub Repo:
+**[https://github.com/TholUccaKool/WorkoutMealprep-PWA-Final](https://github.com/TholUccaKool/WorkoutMealprep-PWA-Final)**
 
-📱 6. PWA Features
+GitHub Pages Live App:
+**[https://tholuccakool.github.io/WorkoutMealprep-PWA-Final/](https://tholuccakool.github.io/WorkoutMealprep-PWA-Final/)**
 
-✔ Installable on mobile & desktop
-✔ Works offline
-✔ Cached pages and assets
-✔ Fast loading
-✔ Responsive layout
-
-🧪 7. Testing & Validation
-Functional
-
-CRUD works both online and offline
-
-Sync restores missing data
-
-Dashboard updates instantly
-
-Cross-Device
-
-Chrome Desktop
-
-OperaGX
-
-Edge
-
-Samsung Tab S9
-
-Persistence
-
-IndexedDB retains data across refresh
-
-Works after closing the browser
-
-Sync triggers immediately when returning online
-
-📘 8. Project Report
-
-A complete project report PDF is included in the submission.
-It covers all required sections:
-
-Project Overview
-
-Technical Implementation
-
-Challenges
-
-Lessons Learned
-
-Future Enhancements
-
-🚀 9. Future Improvements
-
-Push notifications
-
-Weekly summary analytics
-
-Workout presets
-
-Macro breakdown charts
-
-Wearable device integration
-
-Dark Mode
-
-📎 10. Important Links
-🔗 GitHub Repository
-
-https://github.com/TholUccaKool/WorkoutMealprep-PWA-Final
-
-🌐 Live Website (GitHub Pages)
-
-https://tholuccakool.github.io/WorkoutMealprep-PWA-Final/
-
-© 2025 FitFuel — Built by Thol Ucca Kool
+---
