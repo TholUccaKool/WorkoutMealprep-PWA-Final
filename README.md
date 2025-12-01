@@ -1,29 +1,151 @@
-# FitFuel — Workout & Meal Tracker (PWA Prototype)
+FitFuel — Progressive Web App (PWA)
+Mobile Web Development — INF654
+Final Project by Thol Ucca Kool
 
-A responsive prototype built with **HTML** and **Materialize CSS** that demonstrates core PWA ideas:
-installability (manifest), offline support (service worker), and fast repeat visits (caching).
+FitFuel is a complete Progressive Web App designed to track workouts and meals with full online + offline support, Firebase authentication, and IndexedDB synchronization. The app can be installed on mobile and desktop devices and works even without internet.
 
-## Features
-- Materialize UI with responsive layout (navbar, cards, collapsible lists)
-- Pages: Home, Workouts, Meals, About
-- Installable via `manifest.webmanifest`
-- Offline-ready: basic cache of key pages via `service-worker.js`
+📌 Features
+🔥 Core Functionality
 
-## Run Locally
-Just open `index.html` in a modern browser. For full service worker behavior,
-you'll need to serve files over HTTP(S). The simplest way is using Python:
+Add, edit, delete workouts
 
-```bash
-# From project folder:
-python3 -m http.server 8080
-# then visit http://localhost:8080
-```
+Add, edit, delete meals
 
-## Deploy to GitHub Pages
-1. Push this folder to a public GitHub repo.
-2. In repo settings → Pages → set **Branch: main / root**.
-3. Access at: `https://<your-username>.github.io/<repo-name>/`
+Dashboard showing recent data
 
-## Notes
-- Content and images are placeholders for demo purposes.
-- This is a prototype—no real data storage or backend is included.
+7-day calorie chart (Chart.js)
+
+Works fully offline
+
+Syncs automatically when back online
+
+👤 User Authentication (Firebase Auth)
+
+Email + Password login system
+
+Users can sign up and sign in
+
+Sign-out supported
+
+Each user's data is isolated using UID-based filtering
+
+Users only see their own workouts and meals
+
+☁ Online + Offline Data Storage
+Firebase Firestore (Online)
+
+Stores synced workouts and meals
+
+Data is stored per-user
+
+Supports updates and deletes
+
+IndexedDB (Offline Mode)
+
+Stores workouts + meals when offline
+
+Stores pending operations (create/update/delete)
+
+On reconnection, pendingSync items are automatically pushed to Firestore
+
+🔄 Sync Logic
+
+FitFuel uses a "pendingSync" store inside IndexedDB:
+
+If offline → save data locally
+
+Save the same entry to pendingSync
+
+When internet returns → syncAllPending() runs
+
+Firestore updates get applied based on the entry UID
+
+This ensures no data loss and prevents conflicting IDs.
+
+⚙ Technical Stack
+
+HTML, CSS, JavaScript
+
+Materialize CSS
+
+Chart.js
+
+Firebase Authentication
+
+Firebase Firestore
+
+IndexedDB
+
+Service Worker
+
+Manifest.json
+
+📦 PWA Features
+
+Add to Home Screen
+
+Works offline
+
+Caches assets with Cache API
+
+Fully responsive
+
+Installable on phone or desktop
+
+🧪 Testing & Validation
+✔ Functional Testing
+
+CRUD operations work online
+
+CRUD operations work offline
+
+Data syncs correctly after reconnecting
+
+Dashboard updates instantly
+
+✔ Cross-Device Testing
+
+Tested on:
+
+Chrome Desktop
+
+OperaGX Desktop
+
+Samsung Tab S9
+
+Edge Desktop
+
+✔ Persistence Testing
+
+Data persists across refresh
+
+Data persists when switching tabs
+
+Data persists after reinstall
+
+📄 Project Report PDF
+
+A PDF version of the full project report is included in the repository.
+(Or attached in submission depending on requirements.)
+
+📁 GitHub Links
+
+Repository:
+https://github.com/TholUccaKool/WorkoutMealprep-PWA-Final
+
+Live Website (GitHub Pages):
+https://tholuccakool.github.io/WorkoutMealprep-PWA-Final/
+
+🚀 Future Enhancements
+
+Push notifications
+
+Weekly summary emails
+
+Workout templates
+
+Dark mode
+
+Wearable integration (Garmin, Fitbit, etc.)
+
+© 2025 FitFuel — Created by Thol Ucca Kool
