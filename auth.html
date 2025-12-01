@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FitFuel | Account</title>
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="grey lighten-4">
+    <!-- NAVBAR -->
+    <nav class="teal darken-4">
+      <div class="nav-wrapper container">
+        <a href="index.html" class="brand-logo">FitFuel</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="workouts.html">Workouts</a></li>
+          <li><a href="meals.html">Meals</a></li>
+          <li>
+            <a href="#!" id="btn-auth-nav"
+              ><i class="material-icons left">person</i>Sign out</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- MAIN AUTH CARD -->
+    <div class="container" style="max-width: 500px; margin-top: 60px">
+      <div class="card">
+        <div class="card-content">
+          <h5 class="center-align">Account</h5>
+          <p class="center-align grey-text" id="auth-status">
+            You are signed out.
+          </p>
+
+          <!-- SIGN UP -->
+          <form id="signup-form" class="section">
+            <h6>Create an account</h6>
+            <div class="input-field">
+              <input id="signup-email" type="email" required />
+              <label for="signup-email">Email</label>
+            </div>
+            <div class="input-field">
+              <input
+                id="signup-password"
+                type="password"
+                minlength="6"
+                required
+              />
+              <label for="signup-password">Password</label>
+            </div>
+            <button
+              class="btn waves-effect waves-light"
+              style="width: 100%"
+              type="submit"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          <div class="divider"></div>
+
+          <!-- LOGIN -->
+          <form id="login-form" class="section">
+            <h6>Sign in</h6>
+            <div class="input-field">
+              <input id="login-email" type="email" required />
+              <label for="login-email">Email</label>
+            </div>
+            <div class="input-field">
+              <input id="login-password" type="password" required />
+              <label for="login-password">Password</label>
+            </div>
+            <button
+              class="btn teal waves-effect waves-light"
+              style="width: 100%"
+              type="submit"
+            >
+              Sign In
+            </button>
+          </form>
+
+          <!-- LOGOUT -->
+          <button
+            id="btn-logout"
+            class="btn red waves-effect waves-light"
+            style="display: none; width: 100%; margin-top: 16px"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js?v=8"></script>
+  </body>
+</html>

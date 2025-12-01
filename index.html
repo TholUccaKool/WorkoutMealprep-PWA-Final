@@ -23,37 +23,47 @@
       content="Track workouts and meals with an installable, offline-capable PWA prototype built with Materialize CSS."
     />
   </head>
+
   <body>
     <!-- NAVBAR -->
     <div class="navbar-fixed">
       <nav class="teal darken-4">
         <div class="nav-wrapper container">
           <a href="index.html" class="brand-logo">FitFuel</a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger"
-            ><i class="material-icons">menu</i></a
-          >
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+            <i class="material-icons">menu</i>
+          </a>
           <ul class="right hide-on-med-and-down">
             <li>
-              <a href="workouts.html"
-                ><i class="material-icons left">fitness_center</i>Workouts</a
-              >
+              <a href="workouts.html">
+                <i class="material-icons left">fitness_center</i>Workouts
+              </a>
             </li>
             <li>
-              <a href="meals.html"
-                ><i class="material-icons left">restaurant</i>Meals</a
-              >
+              <a href="meals.html">
+                <i class="material-icons left">restaurant</i>Meals
+              </a>
             </li>
             <li>
-              <a href="about.html"
-                ><i class="material-icons left">info</i>About</a
-              >
+              <a href="about.html">
+                <i class="material-icons left">info</i>About
+              </a>
+            </li>
+            <li>
+              <a href="auth.html">
+                <i class="material-icons left">person</i>Account
+              </a>
             </li>
           </ul>
         </div>
       </nav>
     </div>
 
+    <!-- MOBILE SIDENAV -->
     <ul class="sidenav" id="mobile-demo">
+      <li>
+        <a href="index.html"><i class="material-icons left">home</i>Home</a>
+      </li>
       <li>
         <a href="workouts.html"
           ><i class="material-icons left">fitness_center</i>Workouts</a
@@ -66,6 +76,9 @@
       </li>
       <li>
         <a href="about.html"><i class="material-icons left">info</i>About</a>
+      </li>
+      <li>
+        <a href="auth.html"><i class="material-icons left">person</i>Account</a>
       </li>
     </ul>
 
@@ -140,10 +153,7 @@
         <div class="row" id="dashboard-cards"></div>
         <div class="card">
           <div class="card-content" style="height: 300px">
-            <canvas
-              id="calorie-chart"
-              aria-label="Calories per day chart"
-            ></canvas>
+            <canvas id="calorie-chart" aria-label="Calories chart"></canvas>
           </div>
         </div>
         <div id="favorites" class="grey-text"></div>
@@ -227,15 +237,11 @@
       </div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore-compat.js"></script>
-
-    <!-- App Logic -->
-    <script src="app.js?v=3"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js?v="></script>
   </body>
 </html>
